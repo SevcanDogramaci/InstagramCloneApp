@@ -16,13 +16,6 @@ const posts = [
     secondImgSrc: require('./data/img/tom2.jpg'),
   },
   {
-    id: 8,
-    creator: 'Mikhail Nilov',
-    type: 'video',
-    profilePhoto: require('./data/img/profile.png'),
-    src: require('./data/video/mikhail.mp4'),
-  },
-  {
     id: 2,
     creator: 'Zhang Kaiyv',
     type: 'photo',
@@ -47,13 +40,6 @@ const posts = [
     secondImgSrc: require('./data/img/shvets2.jpg'),
   },
   {
-    id: 7,
-    creator: 'Karolina Grabowska',
-    type: 'video',
-    profilePhoto: require('./data/img/profile.png'),
-    src: require('./data/video/karolina.mp4'),
-  },
-  {
     id: 5,
     creator: 'Pexels',
     type: 'photo',
@@ -70,6 +56,20 @@ const posts = [
     secondImgSrc: require('./data/img/nida2.jpg'),
   },
   {
+    id: 7,
+    creator: 'Karolina Grabowska',
+    type: 'video',
+    profilePhoto: require('./data/img/profile.png'),
+    src: require('./data/video/karolina.mp4'), //
+  },
+  {
+    id: 8,
+    creator: 'Mikhail Nilov',
+    type: 'video',
+    profilePhoto: require('./data/img/profile.png'),
+    src: require('./data/video/mikhail.mp4'),
+  },
+  {
     id: 9,
     creator: 'Polina Tankilevitch',
     type: 'video',
@@ -81,7 +81,7 @@ const posts = [
     creator: 'Peter San',
     type: 'video',
     profilePhoto: require('./data/img/profile.png'),
-    src: require('./data/video/peter.mp4'),
+    src: require('./data/video/san.mp4'), //
   },
 ];
 
