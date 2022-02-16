@@ -1,22 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback, useEffect} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
-import {FlatGrid} from 'react-native-super-grid';
 import SearchBar from './components/SearchBar';
 import {getSearchedPosts} from '../../api/mockAPI';
-import PostContent from '../components/PostContent';
+import Post from './components/PostContent';
 import debounce from 'lodash.debounce';
+import {VIEWABILITY_CONFIG} from '../config/ViewabilityConfig';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
+import { FLATLIST_CONFIG } from '../config/FlatListConfig';
 
-const renderPost = (item, width) => {
-  return (
-    <PostContent
-      src={item.src || item.firstImgSrc}
-      type={item.type}
-      width={width}
-    />
-  );
-};
+const gridItemDimension = Math.floor(Dimensions.get('window').width) / 2;
+const numOfColumns =
+  Math.floor(Dimensions.get('window').width) / gridItemDimension;
 
 const SearchScreen = () => {
   const [searchInfo, setSearchInfo] = useState({
@@ -49,10 +44,9 @@ const SearchScreen = () => {
     [],
   );
   const getGridItemKey = useCallback(item => item.id, []);
-  const gridItemDimension = Math.floor(Dimensions.get('window').width) / 3;
   const renderGridItem = ({item}) => {
     return (
-      <PostContent
+      <Post
         src={item.src || item.firstImgSrc}
         type={item.type}
         width={gridItemDimension}
@@ -61,29 +55,40 @@ const SearchScreen = () => {
     );
   };
 
+  const handleViewableItemsChanged = useCallback(({changed, viewableItems}) => {
+    setSearchInfo(prevSearchInfo => {
+      let pausedStatesCopy = [...prevSearchInfo.pausedStates];
+
+      changed.forEach(viewToken => {
+        const {item, isViewable} = viewToken;
+
+        if (isViewable) {
+          pausedStatesCopy[item.id] = false;
+        } else {
+          pausedStatesCopy[item.id] = true;
+        }
+      });
+      return {...prevSearchInfo, pausedStates: pausedStatesCopy};
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <SearchBar onSearchItemChange={debouncedgetSearchedItems} />
       {searchInfo.loading && <CustomActivityIndicator />}
-      {/* {!searchInfo.loading && (
-        <FlatGrid
-          style={styles.grid}
-          itemDimension={gridItemDimension}
-          spacing={0}
-          data={searchInfo.posts}
-          renderItem={renderGridItem}
-          keyExtractor={getGridItemKey}
-        />
-      )} */}
       {!searchInfo.loading && (
         <FlatList
           keyExtractor={getGridItemKey}
           data={searchInfo.posts}
           renderItem={renderGridItem}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-          }}
-          numColumns={2}
+          viewabilityConfig={VIEWABILITY_CONFIG}
+          initialNumToRender={FLATLIST_CONFIG.initialNumToRender}
+          maxToRenderPerBatch={FLATLIST_CONFIG.maxToRenderPerBatch}
+          removeClippedSubviews={FLATLIST_CONFIG.removeClippedSubviews}
+          windowSize={FLATLIST_CONFIG.windowSize}
+          extraData={searchInfo.pausedStates}
+          onViewableItemsChanged={handleViewableItemsChanged}
+          numColumns={numOfColumns}
         />
       )}
     </View>

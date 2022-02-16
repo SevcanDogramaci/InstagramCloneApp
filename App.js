@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// import {SafeAreaView} from 'react-native';
 
 import LoginScreen from './src/screens/login/LoginScreen';
 import FeedScreen from './src/screens/feed/FeedScreen';

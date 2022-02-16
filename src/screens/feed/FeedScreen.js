@@ -2,13 +2,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Dimensions} from 'react-native';
 import {getPosts} from '../../api/mockAPI';
+import {VIEWABILITY_CONFIG} from '../config/ViewabilityConfig';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import ImagePost from './components/ImagePost';
 import VideoPost from './components/VideoPost';
-
-const CONFIG = {
-  itemVisiblePercentThreshold: 50,
-};
+import { FLATLIST_CONFIG } from '../config/FlatListConfig';
 
 const FeedScreen = () => {
   const [postsInfo, setPostsInfo] = useState({
@@ -18,6 +16,7 @@ const FeedScreen = () => {
 
   useEffect(() => {
     getPosts().then(fetchedPosts => {
+      console.log(fetchedPosts.length);
       setPostsInfo({
         posts: fetchedPosts,
         pausedStates: new Array(fetchedPosts.length).fill(true),
@@ -38,8 +37,14 @@ const FeedScreen = () => {
 
         if (isViewable) {
           pausedStatesCopy[item.id] = false;
+          if (item.type === 'video') {
+            console.log(item.creator, item.id, 'is resuming !');
+          }
         } else {
           pausedStatesCopy[item.id] = true;
+          if (item.type === 'video') {
+            console.log(item.creator, item.id, 'is paused !');
+          }
         }
       });
       return {...prevPostsInfo, pausedStates: pausedStatesCopy};
@@ -62,13 +67,13 @@ const FeedScreen = () => {
         renderItem={renderListItem}
         ItemSeparatorComponent={renderSeparator}
         ListEmptyComponent={renderActivityIndicator()}
-        initialNumToRender={5}
-        maxToRenderPerBatch={5}
-        removeClippedSubviews
-        windowSize={3}
+        initialNumToRender={FLATLIST_CONFIG.initialNumToRender}
+        maxToRenderPerBatch={FLATLIST_CONFIG.maxToRenderPerBatch}
+        removeClippedSubviews={FLATLIST_CONFIG.removeClippedSubviews}
+        windowSize={FLATLIST_CONFIG.windowSize}
         onViewableItemsChanged={handleViewableItemsChanged}
         extraData={postsInfo.pausedStates}
-        viewabilityConfig={CONFIG}
+        viewabilityConfig={VIEWABILITY_CONFIG}
       />
     </View>
   );
