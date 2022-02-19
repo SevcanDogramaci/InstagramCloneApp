@@ -6,7 +6,7 @@ import {VIEWABILITY_CONFIG} from '../config/ViewabilityConfig';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import ImagePost from './components/ImagePost';
 import VideoPost from './components/VideoPost';
-import { FLATLIST_CONFIG } from '../config/FlatListConfig';
+import {FLATLIST_CONFIG} from '../config/FlatListConfig';
 
 const FeedScreen = () => {
   const [postsInfo, setPostsInfo] = useState({

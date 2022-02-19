@@ -7,7 +7,7 @@ import Post from './components/PostContent';
 import debounce from 'lodash.debounce';
 import {VIEWABILITY_CONFIG} from '../config/ViewabilityConfig';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
-import { FLATLIST_CONFIG } from '../config/FlatListConfig';
+import {FLATLIST_CONFIG} from '../config/FlatListConfig';
 
 const gridItemDimension = Math.floor(Dimensions.get('window').width) / 2;
 const numOfColumns =
