@@ -16,7 +16,6 @@ const FeedScreen = () => {
 
   useEffect(() => {
     getPosts().then(fetchedPosts => {
-      console.log(fetchedPosts.length);
       setPostsInfo({
         posts: fetchedPosts,
         pausedStates: new Array(fetchedPosts.length).fill(true),
@@ -37,14 +36,8 @@ const FeedScreen = () => {
 
         if (isViewable) {
           pausedStatesCopy[item.id] = false;
-          if (item.type === 'video') {
-            console.log(item.creator, item.id, 'is resuming !');
-          }
         } else {
           pausedStatesCopy[item.id] = true;
-          if (item.type === 'video') {
-            console.log(item.creator, item.id, 'is paused !');
-          }
         }
       });
       return {...prevPostsInfo, pausedStates: pausedStatesCopy};

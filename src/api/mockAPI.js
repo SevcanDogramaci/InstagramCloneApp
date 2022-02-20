@@ -13,9 +13,7 @@ export async function getPosts() {
 export async function getSearchedPosts(searchedItem) {
   const searchedItemLength = searchedItem.length;
 
-  return imitateLatency().then(() => {
-    const searchedPosts = posts.filter(post => post.id < searchedItemLength);
-    console.log(`Searched Posts for ${searchedItem} fetched !`, searchedPosts);
-    return searchedPosts;
-  });
+  return imitateLatency().then(() =>
+    posts.filter(post => post.id < searchedItemLength),
+  );
 }
