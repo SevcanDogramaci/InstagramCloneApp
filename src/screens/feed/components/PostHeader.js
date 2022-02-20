@@ -14,17 +14,16 @@ const PostHeader = props => {
 
 const styles = StyleSheet.create({
   profile: {
-    width: '10%',
+    width: 30,
     height: 30,
-    resizeMode: 'contain',
-    borderRadius: 200,
+    borderRadius: 500,
+    margin: 5,
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    margin: 7,
   },
   text: {
     fontWeight: 'bold',

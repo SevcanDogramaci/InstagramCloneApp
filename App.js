@@ -23,7 +23,7 @@ const App = () => {
           name="feed"
           component={FeedScreen}
           options={{
-            headerBackVisible: true,
+            headerBackTitleVisible: false,
             headerTitle: props => <HeaderTitle {...props} />,
             headerRight: props => <HeaderRight {...props} />,
           }}
@@ -32,6 +32,7 @@ const App = () => {
           name="search"
           component={SearchScreen}
           options={{
+            headerBackTitleVisible: false,
             headerTitle: props => <HeaderTitle {...props} />,
           }}
         />
